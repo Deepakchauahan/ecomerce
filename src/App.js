@@ -8,6 +8,13 @@ import Header from './components/common/layout/Header';
 import WishlistProduct from './pages/wishlistProduct';
 import SingleProduct from './pages/singleProduct';
 import ProductCart from './pages/productCart';
+import Pagination from './pages/pagination';
+import ServerPagination from './pages/serverPagination';
+import InfiniteScroll from './pages/infiniteScroll';
+import Popover from './pages/popover';
+import StarPattern from './pages/starPattern';
+import TabPattern from './pages/tabPattern';
+import FileFolder from './pages/fileFolder';
 
 function App() {
   return (
@@ -15,9 +22,15 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<AllProduct />} />
+          <Route path="/client-pagination" element={<Pagination />} />
+          <Route path="/server-pagination" element={<ServerPagination />} />
+          <Route path="/infinite-scroll" element={<InfiniteScroll />} />
+          <Route path="/popover" element={<Popover />} />
+          <Route path="/start-pattern" element={<StarPattern />} />
+          <Route path="/tab-pattern" element={<TabPattern />} />
+          <Route path="/file-folder" element={<FileFolder />} />
           <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/all-product" element={<AllProduct />} />
           <Route path="/product-wishlist" element={<WishlistProduct />} />
           <Route path="/cart" element={<ProductCart />} />
           <Route path={`/edit-product/:id`} element={<AddProduct />} />

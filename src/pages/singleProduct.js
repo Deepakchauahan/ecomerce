@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {  useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CreateProduct } from '../components/context/productContext'
 
 export default function SingleProduct() {
     const { id } = useParams()
     const { productList, productCart, setProductCart } = useContext(CreateProduct)
+    const [quantity, setQuantity] = useState(1)
     const [product, setProduct] = useState({})
     useEffect(() => {
         setProduct(productList.find(item => item.id == id))
@@ -15,11 +16,25 @@ export default function SingleProduct() {
             console.log("already added");
 
         } else {
+            let item = productList.find((item) => item.id == id)
             setProductCart(prev => [
                 ...prev,
-                productList.find((item) => item.id == id)
+                { ...item, quantity }
             ])
         }
+    }
+    // useEffect(() => {
+    //     let item = productList.find((item) => item.id == id)
+    //     setProductCart(item)
+    // }, [quantity])
+
+    const quantityHandler = (action) => {
+        if (action == "dec") {
+            setQuantity(prev => Math.max(1, prev - 1))
+        } else {
+            setQuantity(prev => Math.min(product.stock, prev + 1))
+        }
+
     }
     return (
         <div>
@@ -27,14 +42,15 @@ export default function SingleProduct() {
             <ul style={{ display: "flex", flexWrap: "wrap" }}>
                 <li style={{ width: "50%" }}>
                     {product?.images?.length > 0 && product.images.map((img, i) => (
-                        <img src={img} alt={product.title + i} key={img} style={{width:200}}/>
+                        <img src={img} alt={product.title + i} key={img} style={{ width: 200 }} />
                     ))}
                     <h3>Name: {product.title}</h3>
                     <p>Description: {product.description}</p>
-                    <p>category : {[product.category]}</p>
+                    <p>category : {product.category}</p>
                     <p>Status: {product.availabilityStatus}</p>
-                    <p>Price: <strong>INR {product.price}</strong></p>
+                    <p>Price: <strong>INR {(quantity * product.price)}</strong></p>
                     <p>Discount: <strong>{product.discountPercentage}%</strong></p>
+                    <div>Quantity: <button onClick={() => { quantityHandler("dec") }}>-</button>{quantity}<button onClick={() => { quantityHandler("inc") }}>+</button></div>
                     <p>Rating : {product.rating}</p>
                     <p>Stock : {product.stock}</p>
                     <div>Tag: <ul>

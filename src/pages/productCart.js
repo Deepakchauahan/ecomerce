@@ -15,6 +15,7 @@ export default function ProductCart() {
                         <th>Category</th>
                         <th>Status</th>
                         <th>Price</th>
+                        <th>Quantity</th>
                         <th>Discount</th>
                         <th>Rating</th>
                         <th>Brand</th>
@@ -27,7 +28,8 @@ export default function ProductCart() {
                             <td>{product.title}</td>
                             <td>{product.category}</td>
                             <td>{product.availabilityStatus}</td>
-                            <td>INR {product.price}</td>
+                            <td>INR {product.quantity*product.price}</td>
+                            <td>{product.quantity}</td>
                             <td>{product.discountPercentage}%</td>
                             <td>{product.rating}</td>
                             <td>{product.brand}</td>
